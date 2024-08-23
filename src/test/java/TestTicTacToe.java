@@ -45,6 +45,28 @@ public class TestTicTacToe {
     }
 
     @Test
+    void testMoreThanOneWinnerInTwoRows() {
+        char[][] board = {
+                {'X', 'X', 'X'},
+                {'O', 'O', 'O'},
+                {'O', 'X', 'X'}
+        };
+        Character result = getResult(board);
+        assertNull(result, "This board is not valid because there is more than one winner");
+    }
+
+    @Test
+    void testMoreThanOneWinnerInTwoColumns() {
+        char[][] board = {
+                {'O', 'X', '-'},
+                {'O', 'X', '-'},
+                {'O', 'X', '-'}
+        };
+        Character result = getResult(board);
+        assertNull(result, "This board is not valid because there is more than one winner");
+    }
+
+    @Test
     public void testDraw1() {
         char[][] board = {
                 {'X', '-', 'O'},

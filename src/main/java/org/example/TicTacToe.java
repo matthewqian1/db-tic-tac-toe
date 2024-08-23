@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class TicTacToe {
@@ -10,36 +11,45 @@ public class TicTacToe {
     public static Set<Character> validCellValues = Set.of(empty, player1, player2);
 
     public static Character getResult(char[][] board) {
+        Set<Character> results = new HashSet<>();
         try {
             validateBoard(board);
             // Check diagonals
-            char result = checkDiagonal(board, true);
-            if (result != empty) {
-                return result;
-            }
+            results.add(checkDiagonal(board, true));
 
-            result = checkDiagonal(board, false);
-            if (result != empty) return result;
+            results.add(checkDiagonal(board, false));
 
             // Check rows and columns
             for (int i = 0; i < board.length; i++) {
-                result = checkRow(board, i);
-                if (result != empty) {
-                    return result;
-                }
+                results.add(checkRow(board, i));
 
-                result = checkColumn(board, i);
-                if (result != empty) {
-                    return result;
-                }
+                results.add(checkColumn(board, i));
             }
 
-            return empty;
+            generateFinalResult(results);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    private static Character generateFinalResult(Set<Character> results) {
+        if (results.size() == 1) {
+            return results.stream().findFirst().get();
+        } else if (results.size() == 2) {
+            if (results.contains(empty)) {
+                return  results.stream().filter(r -> r != empty).findFirst().get();
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    private static boolean bothResultsHaveUniqueWinner(char result1, char result2) {
+        return result1 != empty && result2 != empty && result1 != result2;
     }
 
     private static void validateBoard(char[][] board) throws Exception {
