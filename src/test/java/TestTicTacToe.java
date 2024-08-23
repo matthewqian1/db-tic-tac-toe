@@ -5,6 +5,46 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestTicTacToe {
 
     @Test
+    void testNullBoardReturnsNull() {
+        char[][] board = null;
+        Character result = getResult(board);
+        assertNull(result, "Expected null result for null board");
+    }
+
+    @Test
+    void testInvalidBoardDimensionsReturnNull1() {
+        char[][] board = {
+                {'X', 'O'},
+                {'O', 'X'}
+        };
+        Character result = getResult(board);
+        assertNull(result, "Expected null result for invalid board dimensions");
+    }
+
+    @Test
+    void testInvalidBoardDimensionsReturnNull2() {
+        char[][] board = {
+                {'X', 'O', 'O'},
+                {'O', 'X', 'O'},
+                {'O', 'X', 'O'},
+                {'O', 'X', 'O'},
+        };
+        Character result = getResult(board);
+        assertNull(result, "Expected null result for invalid board dimensions");
+    }
+
+    @Test
+    void testUnknownCellValueReturnsNull() {
+        char[][] board = {
+                {'X', 'O', 'X'},
+                {'O', 'X', 'O'},
+                {'Z', 'Z', 'Z'}
+        };
+        Character result = getResult(board);
+        assertNull(result, "Expected null result for board with unknown cell value");
+    }
+
+    @Test
     public void testDraw1() {
         char[][] board = {
                 {'X', '-', 'O'},
